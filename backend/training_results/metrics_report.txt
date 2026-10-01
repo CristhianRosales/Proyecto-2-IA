@@ -1,0 +1,12 @@
+=== Reporte de Clasificación (Validación Cruzada) ===
+              precision    recall  f1-score   support
+
+     No Ship       0.99      0.99      0.99       617
+        Ship       0.98      0.98      0.98       196
+
+    accuracy                           0.99       813
+   macro avg       0.99      0.99      0.99       813
+weighted avg       0.99      0.99      0.99       813
+
+Test Loss: 0.0287
+Test Accuracy: 99.02%

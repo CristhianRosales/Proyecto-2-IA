@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship Detection Intelligence</title>
+    <meta name="description" content="AI-powered cargo ship detection system in satellite imagery.">
+    <link rel="stylesheet" href="/static/style.css?v=1.1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Control Panel -->
+        <aside class="sidebar">
+            <div class="logo-container">
+                <i class="fa-solid fa-satellite-dish"></i>
+                <h1>AeroShip AI</h1>
+            </div>
+            
+            <div class="control-group">
+                <h3>1. Upload Test Dataset</h3>
+                <label for="folder-upload" class="custom-file-upload btn-primary">
+                    <i class="fa-solid fa-folder-open"></i> Select Image Folder
+                </label>
+                <input id="folder-upload" type="file" webkitdirectory directory multiple accept="image/png, image/jpeg" />
+                <div id="file-count" class="status-text">0 images loaded</div>
+            </div>
+
+            <div class="control-group">
+                <h3>2. Labeling Mode</h3>
+                <p class="text-sm text-muted">Use filename to auto-label (1_xxx.png) or manual labeling.</p>
+                <button id="auto-label-btn" class="btn-secondary" disabled>
+                    <i class="fa-solid fa-magic"></i> Auto-Extract Labels
+                </button>
+            </div>
+
+            <div class="control-group">
+                <h3>3. Run Inference</h3>
+                <button id="run-inference-btn" class="btn-accent" disabled>
+                    <i class="fa-solid fa-microchip"></i> Start Live Inference
+                </button>
+                <div class="progress-bar-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-nav">
+                <h2>Live Evaluation Dashboard</h2>
+                <div class="status-badge">
+                    <span class="indicator live"></span> System Ready
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                <!-- Metrics -->
+                <div class="card metric-card">
+                    <div class="metric-title">Accuracy</div>
+                    <div class="metric-value" id="metric-accuracy">0.00%</div>
+                    <div class="metric-target">Target: >98%</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-title">Precision</div>
+                    <div class="metric-value" id="metric-precision">0.00%</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-title">Recall</div>
+                    <div class="metric-value" id="metric-recall">0.00%</div>
+                </div>
+                <div class="card metric-card confusion-matrix">
+                    <div class="metric-title">Confusion Matrix</div>
+                    <div class="matrix-grid">
+                        <div class="matrix-cell header"></div>
+                        <div class="matrix-cell header">Pred Ship</div>
+                        <div class="matrix-cell header">Pred No-Ship</div>
+                        
+                        <div class="matrix-cell header">True Ship</div>
+                        <div class="matrix-cell val tp" id="cm-tp">0</div>
+                        <div class="matrix-cell val fn" id="cm-fn">0</div>
+                        
+                        <div class="matrix-cell header">True No-Ship</div>
+                        <div class="matrix-cell val fp" id="cm-fp">0</div>
+                        <div class="matrix-cell val tn" id="cm-tn">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Viewer -->
+            <div class="card image-gallery-card">
+                <div class="gallery-header">
+                    <h3>Inference Queue & Manual Labeling</h3>
+                    <div class="gallery-filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="errors">Errors</button>
+                    </div>
+                </div>
+                <div class="gallery-grid" id="image-gallery">
+                    <!-- Images will be populated here by JS -->
+                    <div class="empty-state">
+                        <i class="fa-regular fa-image"></i>
+                        <p>Upload a folder to begin.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="/static/script.js?v=1.1"></script>
+</body>
+</html>
